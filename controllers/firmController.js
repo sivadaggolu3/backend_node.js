@@ -47,13 +47,13 @@ addFirm = async (req, res) => {
 
 }
 
-const deleteFirmById = async (req, res) => {
+ deleteFirmById = async (req, res) => {
   try {
     const firmId = req.params.firmId;
 
     const deletedProduct = await product.findByIdAndDelete(firmId);
 
-    if (!deletedproduct) {
+    if (!deletedProduct) {
       return res.status(404).json({ error: "No product found" })
     }
 
@@ -64,4 +64,4 @@ const deleteFirmById = async (req, res) => {
 
 }
 
-module.exports = { addFirm, upload };
+module.exports = { addFirm, upload,deleteFirmById};
