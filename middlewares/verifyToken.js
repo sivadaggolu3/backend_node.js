@@ -7,7 +7,7 @@ const secretKey=process.env.WhatIsYourName;
 const VerifyToken=async(req,res,next)=>{
   console.log("Headers:", req.headers);
 
-    const token=req.headers.token;
+    const token=req.headers.token|| req.headers.authorization?.split("")[1];
 
     if(!token){
         return res.status(401).json({error:'token is required'});
