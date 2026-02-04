@@ -52,7 +52,7 @@ const vendorLogin=async(req,res)=>{
 
 const getAllVendors=async(req,res)=>{
    try{
-      const vendors=await Vendor.find().populate('firm');
+      const vendors=await Vendor.find();
       res.json({vendors});
    }
    catch(error){
@@ -64,10 +64,10 @@ const getAllVendors=async(req,res)=>{
 const getVendorById=async(req,res)=>{
    const vendorId=req.params.id
      try{
-          const vendor=await vendor.findById(vendorId);
+          const vendor=await Vendor.findById(vendorId);
 
           if(!vendor){
-            return res.status(400).json({error:"vendor not found"})
+            return res.status(404).json({error:"vendor not found"})
           }
           res.status(200).json("vendor");
      }
