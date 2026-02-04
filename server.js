@@ -21,6 +21,6 @@ app.listen(PORT, () => {
 });
 
 app.use('/', (req, res) => {
-    res.send("welcome to siva app");
+    res.send("welcome to siva application");
 });
 
