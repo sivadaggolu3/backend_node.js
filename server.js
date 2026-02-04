@@ -1,26 +1,44 @@
 const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
 const vendorRoutes = require('./routes/vendorRoutes');
-const dotEnv = require('dotenv');
-const mongoose = require('mongoose');
-const bodyparser = require('body-parser')
-const firmRoutes = require('./routes/firmRoutes')
-const productRoutes = require('./routes/productRoutes')
+const firmRoutes = require('./routes/firmRoutes');
+const productRoutes = require('./routes/productRoutes');
+
+dotenv.config();
+
 const app = express();
-dotEnv.config();
 const PORT = process.env.PORT || 8000;
-mongoose.connect(process.env.MANGO_URI)
-    .then(() => console.log("mangodb connected succesfully"))
-    .catch((error) => console.log(error));
-app.use(bodyparser.json());
-app.use('/vendor', vendorRoutes);
-app.use('/firm', firmRoutes);
-app.use('/product', productRoutes);
-app.use('/uploads', express.static('uploads'));
-app.listen(PORT, () => {
-    console.log(`server running ${PORT}`);
-});
 
-app.use('/', (req, res) => {
-    res.send("welcome to siva application");
-});
+// 🚫 Disable mongoose buffering (VERY IMPORTANT)
+mongoose.set("bufferCommands", false);
 
+async function startServer() {
+  try {
+    await mongoose.connect(process.env.MANGO_URI);
+    console.log("MongoDB connected successfully");
+
+    app.use(bodyParser.json());
+
+    app.use('/vendor', vendorRoutes);
+    app.use('/firm', firmRoutes);
+    app.use('/product', productRoutes);
+    app.use('/uploads', express.static('uploads'));
+
+    app.get('/', (req, res) => {
+      res.send("welcome to siva app");
+    });
+
+    app.listen(PORT, () => {
+      console.log(`Server running on ${PORT}`);
+    });
+
+  } catch (error) {
+    console.error("MongoDB connection FAILED ❌", error);
+    process.exit(1); // stop server if DB fails
+  }
+}
+
+startServer();
