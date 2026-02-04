@@ -7,7 +7,7 @@ const firmRoutes = require('./routes/firmRoutes')
 const productRoutes = require('./routes/productRoutes')
 const app = express();
 dotEnv.config();
-const port = process.env.Port || 8000;
+const PORT = process.env.PORT || 8000;
 mongoose.connect(process.env.MANGO_URI)
     .then(() => console.log("mangodb connected succesfully"))
     .catch((error) => console.log(error));
@@ -16,8 +16,8 @@ app.use('/vendor', vendorRoutes);
 app.use('/firm', firmRoutes);
 app.use('/product', productRoutes);
 app.use('/uploads', express.static('uploads'));
-app.listen(port, () => {
-    console.log(`server running ${port}`);
+app.listen(PORT, () => {
+    console.log(`server running ${PORT}`);
 });
 
 app.use('/', (req, res) => {

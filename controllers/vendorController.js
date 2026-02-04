@@ -57,7 +57,7 @@ const getAllVendors=async(req,res)=>{
    }
    catch(error){
        console.error("DETAILED ERROR:", error && error.stack ? error.stack : error);
-  res.status(500).json({ error: error.message || "Internal Server Error" });
+  res.status(500).json({ error: error.message || "Internal server  Error" });
    }
 }
 
