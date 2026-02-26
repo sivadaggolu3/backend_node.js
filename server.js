@@ -6,13 +6,17 @@ const bodyParser = require("body-parser");
 const vendorRoutes = require('./routes/vendorRoutes');
 const firmRoutes = require('./routes/firmRoutes');
 const productRoutes = require('./routes/productRoutes');
-
-dotenv.config();
+const cors=require("cors");
 
 const app = express();
+dotenv.config();
+app.use(cors());
+app.use(express.json());
+
+
 const PORT = process.env.PORT || 8000;
 
-// 🚫 Disable mongoose buffering (VERY IMPORTANT)
+
 mongoose.set("bufferCommands", false);
 
 async function startServer() {

@@ -7,10 +7,9 @@ const path = require('path');
 router.post('/add-firm', verifyToken, firmController.upload.single('image'), firmController.addFirm);
 
 router.get('/uploads/:imageName', (req, res) => {
-     const imageName = req.params.imageName;
-     res.setHeader('content-Type', 'image/jpeg');
-     res.sendFile(path.join(__dirname, '..', 'uploads', imageName));
+  const imageName = req.params.imageName;
+  res.sendFile(path.join(__dirname, '..', 'uploads', imageName));
 });
 
-router.delete('/:firmId',firmController.deleteFirmById);
+router.delete('/:firmId',verifyToken,firmController.deleteFirmById);
 module.exports = router;
